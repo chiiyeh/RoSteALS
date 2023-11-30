@@ -24,14 +24,14 @@ python inference.py --config models/VQ4_mir_inference.yaml --weight models/RoSte
 ```
 
 We use BCH Error Code Correction which costs 40 bits of our 100-bit payload, thus the secret text should not exceed 7 characters (or 8 ASCII characters, as demonstrated in our live demo above). 
-
+<!---
 You should get the results like this:
 Cover | Stego | Resolution | Secret text
 :---:| :---: |:---: | :---:
 <img src="examples/monalisa.jpg" height="200px"/> | <img src="examples/monalisa_secrets.png" height="200px"/> | 1200x771| secrets
 <img src="examples/934.jpg" height="200px"/> | <img src="examples/934_Harry.png" height="200px"/> | 640x427| Harry
 <img src="examples/forest.jpg" height="200px"/> | <img src="examples/forest_Braies.png" height="200px"/> | 1920x1325 |Braies
-
+-->
 
 # Train your own model
 ## Data Preparation
