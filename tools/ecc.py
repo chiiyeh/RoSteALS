@@ -71,7 +71,7 @@ def get_random_unicode(length):
 
 class BCH(object):
     def __init__(self, BCH_POLYNOMIAL = 137, BCH_BITS = 5, payload_len=100, verbose=True,**kwargs):
-        self.bch = bchlib.BCH(BCH_POLYNOMIAL, BCH_BITS)
+        self.bch = bchlib.BCH(BCH_BITS, prim_poly=BCH_POLYNOMIAL)
         self.payload_len = payload_len  # in bits
         self.data_len = (self.payload_len - self.bch.ecc_bytes*8)//7  # in ascii characters
         assert self.data_len*7+self.bch.ecc_bytes*8 <= self.bch.n, f'Error! BCH with poly {BCH_POLYNOMIAL} and bits {BCH_BITS} can only encode max {self.bch.n//8} bytes of total payload'
@@ -109,7 +109,7 @@ class BCH(object):
         # assert len(packet) == self.data_len + self.bch.ecc_bytes
         data, ecc = packet[:-self.bch.ecc_bytes], packet[-self.bch.ecc_bytes:]
         data0 = decode_text_ascii(deepcopy(data)).strip()
-        bitflips = self.bch.decode_inplace(data, ecc)
+        bitflips = self.bch.decode(data, ecc)
         if bitflips == -1:  # error, return random text
             data = data0
         else:
@@ -145,7 +145,7 @@ def decode_text_ascii(text: bytearray):
 
 class ECC(object):
     def __init__(self, BCH_POLYNOMIAL = 137, BCH_BITS = 5, **kwargs):
-        self.bch = bchlib.BCH(BCH_POLYNOMIAL, BCH_BITS)
+        self.bch = bchlib.BCH(BCH_BITS, prim_poly=BCH_POLYNOMIAL)
     
     def get_total_len(self):
         return 100
@@ -173,7 +173,7 @@ class ECC(object):
         packet = bytearray(packet)
 
         data, ecc = packet[:-self.bch.ecc_bytes], packet[-self.bch.ecc_bytes:]
-        bitflips = self.bch.decode_inplace(data, ecc)
+        bitflips = self.bch.decode(data, ecc)
         if bitflips == -1:  # error, return random data
             data = np.random.binomial(1, .5, 56) 
         else:

@@ -1,0 +1,14 @@
+omegaconf
+bchlib
+Pillow
+six
+einops
+lightning
+kornia
+opencv-python
+matplotlib
+imagenet-c
+scikit-learn
+scikit-image
+lpips
+-e git+https://github.com/CompVis/taming-transformers.git@master#egg=taming-transformers

@@ -65,7 +65,8 @@ def calculate_frechet_distance(mu1, sigma1, mu2, sigma2, eps=1e-6):
 class SIFID(object):
     def __init__(self, dims=64) -> None:
         block_idx = InceptionV3.BLOCK_INDEX_BY_DIM[dims]
-        self.model = InceptionV3([block_idx]).cuda()
+        self.model = InceptionV3([block_idx])
+        # self.model = InceptionV3([block_idx]).cuda()
         self.model.eval()
         self.dims = dims
     
@@ -87,8 +88,10 @@ class SIFID(object):
     def __call__(self, x1, x2):
         # x1, x2 tensor (B, C, H, W) in range [-1, 1]
         x1, x2 = (x1 + 1.)/2, (x2 + 1.)/2  # [-1, 1] -> [0, 1]
-        m1, s1 = self.calculate_activation_statistics(x1.unsqueeze(0).cuda())
-        m2, s2 = self.calculate_activation_statistics(x2.unsqueeze(0).cuda())
+        m1, s1 = self.calculate_activation_statistics(x1.unsqueeze(0))
+        # m1, s1 = self.calculate_activation_statistics(x1.unsqueeze(0).cuda())
+        m2, s2 = self.calculate_activation_statistics(x2.unsqueeze(0))
+        # m2, s2 = self.calculate_activation_statistics(x2.unsqueeze(0).cuda())
         return calculate_frechet_distance(m1, s1, m2, s2)
 
 
