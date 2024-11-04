@@ -51,7 +51,7 @@ def trainer_settings(config, output_dir):
     out['callbacks'] = callbacks
 
     # logger
-    logger = dict(target='pytorch_lightning.loggers.TestTubeLogger', params={'name': 'testtube', 'save_dir': output_dir})
+    logger = dict(target='pytorch_lightning.loggers.CSVLogger', params={'name': 'testtube', 'save_dir': output_dir})
     logger = instantiate_from_config(logger)
     out['logger'] = logger
 
