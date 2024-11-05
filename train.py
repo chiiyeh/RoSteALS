@@ -22,7 +22,7 @@ def trainer_settings(config, output_dir):
     cfgdir = os.path.join(output_dir, 'configs')
     if os.path.exists(os.path.join(ckptdir, 'last.ckpt')):
         resumedir = output_dir
-        out['resume_from_checkpoint'] = os.path.join(ckptdir, 'last.ckpt')
+        ckpt_path = os.path.join(ckptdir, 'last.ckpt')
     else:
         resumedir = ''
 
@@ -125,7 +125,13 @@ def app(args):
     model.learning_rate = get_learningrate(config.lightning, args)
 
     # Train!
-    trainer.fit(model, data)
+    ckptdir = os.path.join(output, 'checkpoints')
+    if os.path.exists(os.path.join(ckptdir, 'last.ckpt')):
+        ckpt_path = os.path.join(ckptdir, 'last.ckpt')
+        trainer.fit(model, data, ckpt_path=ckpt_path)
+    else:
+        resumedir = ''
+        trainer.fit(model, data)
 
 if __name__ == '__main__':
     print(welcome_message())
