@@ -14,7 +14,7 @@ class CUDACallback(Callback):
     # see https://github.com/SeanNaren/minGPT/blob/master/mingpt/callback.py
     def on_train_epoch_start(self, trainer, pl_module):
         # Reset the memory use counter
-        torch.cuda.reset_peak_memory_stats(trainer.root_gpu)
+        torch.cuda.reset_peak_memory_stats(trainer.strategy.root_gpu)
         torch.cuda.synchronize(trainer.root_gpu)
         self.start_time = time.time()
 
