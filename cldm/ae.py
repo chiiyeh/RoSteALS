@@ -505,6 +505,13 @@ class ControlAE(pl.LightningModule):
             eps, posterior = self.control(x, c)
         else:
             eps, posterior = self.control(image, c)
+        try:
+            x + eps
+        except:
+            print(x.shape)
+            print(eps.shape)
+            print(x)
+            print(eps)
         return x + eps, posterior
 
     @torch.no_grad()
