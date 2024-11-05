@@ -32,7 +32,7 @@ def trainer_settings(config, output_dir):
         'generic': dict(target='cldm.logger.SetupCallback', 
         params={'resume': resumedir, 'now': '', 'logdir': output_dir, 'ckptdir': ckptdir, 'cfgdir': cfgdir, 'config': config, 'lightning_config': pl_config}),
 
-        'cuda': dict(target='cldm.logger.CUDACallback', params={}),
+        # 'cuda': dict(target='cldm.logger.CUDACallback', params={}),
 
         'ckpt': dict(target='pytorch_lightning.callbacks.ModelCheckpoint',
         params={'dirpath': ckptdir, 'filename': '{epoch:06}', 'verbose': True, 'save_top_k': -1, 'save_last': True}),
