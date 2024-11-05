@@ -114,7 +114,7 @@ def app(args):
         print(f"{k}, {data.datasets[k].__class__.__name__}, {len(data.datasets[k])}")
 
     # trainer
-    trainer_kwargs = dict(gpus=args.gpus, precision=32)
+    trainer_kwargs = dict(precision=32)
     trainer_kwargs.update(trainer_settings(config, output))
     trainer = pl.Trainer(**trainer_kwargs)
     trainer.logdir = output
